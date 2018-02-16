@@ -12,11 +12,6 @@ void Mind::Init(Face* face, Consciousness* hot, Connectome* net) {
     net_ = net;
 }
 
-void Mind::Tick(const vector<float>& in, vector<float>* out) {
-    UNUSED(in);  // XXX
-    UNUSED(out);  // XXX
-}
-
 void Mind::Train(const vector<uint8_t>& image, ID label) {
     vector<float> act;
     face_->SetUpActivations(&act);
@@ -27,8 +22,8 @@ void Mind::Train(const vector<uint8_t>& image, ID label) {
     face_->SetUpActivations(&new_act);
 
     for (ID i = 0; i < 5; ++i) {
-        Tick(act, &new_act);
-        Tick(new_act, &act);
+        net_->Tick(act, &new_act);
+        net_->Tick(new_act, &act);
     }
 }
 

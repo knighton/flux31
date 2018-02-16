@@ -12,6 +12,8 @@ class Connectome {
   public:
     void Init(ID num_neurons, ID max_inputs_per_neuron, ID init_min_inputs);
 
+    void Tick(const vector<float>& act, vector<float>* new_act);
+
   private:
     // Total number of neurons.
     ID num_neurons_;
