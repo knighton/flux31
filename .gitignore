@@ -1,0 +1,4 @@
+bin/
+data/
+*.swo
+*.swp
