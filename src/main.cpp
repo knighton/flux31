@@ -16,6 +16,8 @@ using sunyata::ImageClassificationDataset;
 using sunyata::Mind;
 
 int main() {
+    // Dataset.
+    size_t num_epochs = 1000;
     string dataset_filename = "data/mnist.txt";
     ImageClassificationDataset data;
     data.Load(dataset_filename);
@@ -56,4 +58,5 @@ int main() {
     // Together.
     Mind mind;
     mind.Init(&face, &hot, &net);
+    mind.Run(data, num_epochs);
 }
