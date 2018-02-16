@@ -20,11 +20,12 @@ void Mind::Train(const vector<uint8_t>& image, ID label) {
     face_->SetUpActivations(&new_act);
 
     for (ID i = 0; i < 2; ++i) {
-    face_->AddImage(image, &act);
-    face_->AddLabel(label, &act);
+        face_->AddImage(image, &act);
+        face_->AddLabel(label, &act);
         net_->Tick(act, &new_act);
-    face_->AddImage(image, &new_act);
-    face_->AddLabel(label, &new_act);
+
+        face_->AddImage(image, &new_act);
+        face_->AddLabel(label, &new_act);
         net_->Tick(new_act, &act);
     }
 }
