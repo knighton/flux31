@@ -10,6 +10,8 @@ namespace sunyata {
 
 class Face {
   public:
+    ID num_labels() const { return num_labels_; }
+
     void Init(ID num_neurons, ID num_image_repeats, ID pixels_per_image,
               float max_image_act, ID num_label_repeats, ID num_labels,
               float label_act);
@@ -19,6 +21,8 @@ class Face {
     void AddImage(const vector<uint8_t>& image, vector<float>* act) const;
 
     void AddLabel(ID label, vector<float>* act) const;
+
+    void PredictLabel(const vector<float>& act, float* preds) const;
 
   private:
     ID num_neurons_;

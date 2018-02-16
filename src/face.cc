@@ -57,4 +57,12 @@ void Face::AddLabel(ID label, vector<float>* act) const {
     }
 }
 
+void Face::PredictLabel(const vector<float>& act, float* preds) const {
+    for (ID i = 0; i < num_label_repeats_; ++i) {
+        for (ID j = 0; j < num_labels_; ++j) {
+            preds[j] += act[i * num_labels_ + j];
+        }
+    }
+}
+
 }  // namespace sunyata

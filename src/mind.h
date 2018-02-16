@@ -14,7 +14,6 @@ class Mind {
     void Run(const ImageClassificationDataset& data, size_t num_epochs);
 
   private:
-    void Tick(const vector<float>& in, vector<float>* out);
     void Train(const vector<uint8_t>& image, ID label);
     void Evaluate(const vector<uint8_t>& image, ID label, bool* is_correct,
                   float* loss);

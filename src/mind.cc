@@ -29,7 +29,25 @@ void Mind::Train(const vector<uint8_t>& image, ID label) {
 
 void Mind::Evaluate(const vector<uint8_t>& image, ID label, bool* is_correct,
                     float* loss) {
-    UNUSED(image);  // XXX
+    vector<float> act;
+    face_->SetUpActivations(&act);
+    face_->AddImage(image, &act);
+
+    vector<float> new_act;
+    face_->SetUpActivations(&new_act);
+
+    auto num_labels = face_->num_labels();
+    vector<float> preds;
+    preds.resize(10 * num_labels);
+
+    for (ID i = 0; i < 5; ++i) {
+        net_->Tick(act, &new_act);
+        face_->PredictLabel(new_act, &preds[i * 2 * num_labels]);
+
+        net_->Tick(new_act, &act);
+        face_->PredictLabel(act, &preds[(i * 2 + 1) * num_labels]);
+    }
+
     UNUSED(label);  // XXX
     UNUSED(is_correct);  // XXX
     UNUSED(loss);  // XXX
