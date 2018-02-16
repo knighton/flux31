@@ -34,4 +34,27 @@ void Face::Init(ID num_neurons, ID num_image_repeats, ID pixels_per_image,
     assert(total_image_slots_ + total_label_slots_ <= num_neurons_);
 }
 
+void Face::SetUpActivations(vector<float>* act) const {
+    act->clear();
+    act->resize(num_neurons_);
+}
+
+void Face::AddImage(const vector<uint8_t>& image, vector<float>* act) const {
+    assert(image.size() == pixels_per_image_);
+    for (ID i = 0; i < num_image_repeats_; ++i) {
+        for (ID j = 0; j < pixels_per_image_; ++j) {
+            auto index = i * pixels_per_image_ + j;
+            auto value = static_cast<float>(image[j]) * max_image_act_ / 255.f;
+            (*act)[index] += value;
+        }
+    }
+}
+
+void Face::AddLabel(ID label, vector<float>* act) const {
+    assert(label < num_labels_);
+    for (ID i = 0; i < num_label_repeats_; ++i) {
+        (*act)[i * num_labels_ + label] += label_act_;
+    }
+}
+
 }  // namespace sunyata

@@ -12,9 +12,24 @@ void Mind::Init(Face* face, Consciousness* hot, Connectome* net) {
     net_ = net;
 }
 
+void Mind::Tick(const vector<float>& in, vector<float>* out) {
+    UNUSED(in);  // XXX
+    UNUSED(out);  // XXX
+}
+
 void Mind::Train(const vector<uint8_t>& image, ID label) {
-    UNUSED(image);  // XXX
-    UNUSED(label);  // XXX
+    vector<float> act;
+    face_->SetUpActivations(&act);
+    face_->AddImage(image, &act);
+    face_->AddLabel(label, &act);
+
+    vector<float> new_act;
+    face_->SetUpActivations(&new_act);
+
+    for (ID i = 0; i < 5; ++i) {
+        Tick(act, &new_act);
+        Tick(new_act, &act);
+    }
 }
 
 void Mind::Evaluate(const vector<uint8_t>& image, ID label, bool* is_correct,
