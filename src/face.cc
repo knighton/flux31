@@ -27,7 +27,7 @@ void Face::Init(ID num_neurons, ID num_image_repeats, ID pixels_per_image,
     label_act_ = label_act;
     auto label_pct = total_label_slots_ * 100.0f / num_neurons;
     printf("[Face] We write labels to %u neurons (%u copies x %u labels) "
-           "(%.3f%%), with selected label activation %.3f.\n",
+           "(%.3f%% of them), with selected label activation %.3f.\n",
            total_label_slots_, num_label_repeats, num_labels_, label_pct,
            label_act_);
 

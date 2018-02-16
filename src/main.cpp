@@ -53,6 +53,7 @@ int main() {
     Connectome net;
     net.Init(num_neurons, max_inputs_per_neuron, init_min_inputs);
 
+    // Together.
     Mind mind;
     mind.Init(&face, &hot, &net);
 }

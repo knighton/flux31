@@ -17,8 +17,8 @@ void Connectome::Init(ID num_neurons, ID max_inputs_per_neuron,
     for (ID i = 0; i < num_neurons; ++i) {
         auto x = static_cast<double>(rand()) / RAND_MAX;
         x = pow(x, 3);
-        x += init_min_inputs;
         x *= (max_inputs_per_neuron - init_min_inputs);
+        x += init_min_inputs;
         auto num_inputs = static_cast<ID>(x);
         inputs_per_neuron_.emplace_back(num_inputs);
         for (ID j = 0; j < num_inputs; ++j) {
