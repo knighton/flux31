@@ -48,8 +48,44 @@ void Mind::Evaluate(const vector<uint8_t>& image, ID label, bool* is_correct,
         face_->PredictLabel(act, &preds[(i * 2 + 1) * num_labels]);
     }
 
-    UNUSED(label);  // XXX
-    UNUSED(is_correct);  // XXX
+    printf("\n");
+    printf("   ");
+    for (ID i = 0; i < 10; ++i) {
+        printf("%7u", i);
+    }
+    printf("\n");
+    vector<float> sums;
+    sums.resize(num_labels);
+    for (ID i = 0; i < 10; ++i) {
+        printf("%2u:", i);
+        for (ID j = 0; j < num_labels; ++j) {
+            auto& pred = preds[i * num_labels + j];
+            sums[j] += pred;
+            printf(" %6.3f", pred);
+        }
+        printf("\n");
+    }
+    printf("\n");
+    printf("\n");
+    printf("   ");
+    ID max_index = 0;
+    float max_sum = -1;
+    for (ID i = 0; i < 10; ++i) {
+        auto& sum = sums[i];
+        printf(" %6.3f", sum);
+        if (max_sum < sum) {
+            max_sum = sum;
+            max_index = i;
+        }
+    }
+    printf("\n");
+    printf("\n");
+    printf("    true %u pred %u acc %u\n", label, max_index,
+           label == max_index);
+    *is_correct = label == max_index;
+    printf("\n");
+    printf("\n");
+
     UNUSED(loss);  // XXX
 }
 
