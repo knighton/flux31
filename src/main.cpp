@@ -23,7 +23,7 @@ int main() {
     data.Load(dataset_filename);
 
     // Number of neurons in your brain.
-    ID num_neurons = 2048;
+    ID num_neurons = 1024;
 
     // The size of your consciousness.
     ID num_hot_slots = 512;

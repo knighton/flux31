@@ -15,14 +15,16 @@ void Mind::Init(Face* face, Consciousness* hot, Connectome* net) {
 void Mind::Train(const vector<uint8_t>& image, ID label) {
     vector<float> act;
     face_->SetUpActivations(&act);
-    face_->AddImage(image, &act);
-    face_->AddLabel(label, &act);
 
     vector<float> new_act;
     face_->SetUpActivations(&new_act);
 
-    for (ID i = 0; i < 5; ++i) {
+    for (ID i = 0; i < 2; ++i) {
+    face_->AddImage(image, &act);
+    face_->AddLabel(label, &act);
         net_->Tick(act, &new_act);
+    face_->AddImage(image, &new_act);
+    face_->AddLabel(label, &new_act);
         net_->Tick(new_act, &act);
     }
 }
@@ -38,9 +40,9 @@ void Mind::Evaluate(const vector<uint8_t>& image, ID label, bool* is_correct,
 
     auto num_labels = face_->num_labels();
     vector<float> preds;
-    preds.resize(10 * num_labels);
+    preds.resize(4 * num_labels);
 
-    for (ID i = 0; i < 5; ++i) {
+    for (ID i = 0; i < 2; ++i) {
         net_->Tick(act, &new_act);
         face_->PredictLabel(new_act, &preds[i * 2 * num_labels]);
 
@@ -50,13 +52,13 @@ void Mind::Evaluate(const vector<uint8_t>& image, ID label, bool* is_correct,
 
     printf("\n");
     printf("   ");
-    for (ID i = 0; i < 10; ++i) {
+    for (ID i = 0; i < 4; ++i) {
         printf("%7u", i);
     }
     printf("\n");
     vector<float> sums;
     sums.resize(num_labels);
-    for (ID i = 0; i < 10; ++i) {
+    for (ID i = 0; i < 4; ++i) {
         printf("%2u:", i);
         for (ID j = 0; j < num_labels; ++j) {
             auto& pred = preds[i * num_labels + j];
@@ -70,7 +72,7 @@ void Mind::Evaluate(const vector<uint8_t>& image, ID label, bool* is_correct,
     printf("   ");
     ID max_index = 0;
     float max_sum = -1;
-    for (ID i = 0; i < 10; ++i) {
+    for (ID i = 0; i < 4; ++i) {
         auto& sum = sums[i];
         printf(" %6.3f", sum);
         if (max_sum < sum) {
