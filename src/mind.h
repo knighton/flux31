@@ -9,7 +9,7 @@ namespace sunyata {
 
 class Mind {
   public:
-    void Init(Face* face, Consciousness* hot, Connectome* network);
+    void Init(Face* face, Consciousness* hot, Connectome* net);
 
   private:
     // Image/label I/O.
@@ -19,7 +19,7 @@ class Mind {
     Consciousness* hot_{nullptr};
 
     // Sparse neuron connectivity matrix.
-    Connectome* network_{nullptr};
+    Connectome* net_{nullptr};
 };
 
 }  // namespace sunyata

@@ -2,10 +2,10 @@
 
 namespace sunyata {
 
-void Mind::Init(Face* face, Consciousness* hot, Connectome* network) {
+void Mind::Init(Face* face, Consciousness* hot, Connectome* net) {
     face_ = face;
     hot_ = hot;
-    network_ = network;
+    net_ = net;
 }
 
 }  // namespace sunyata
